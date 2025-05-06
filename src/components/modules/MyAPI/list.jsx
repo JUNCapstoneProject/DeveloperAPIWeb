@@ -75,7 +75,7 @@ const MyAPIList = () => {
           </tr>
         </thead>
         <tbody>
-          {appList.map((row, idx) => (
+          {appList.map((row) => (
             <tr key={row.name}>
               <Td>{row.name}</Td>
               <Td>{row.type}</Td>

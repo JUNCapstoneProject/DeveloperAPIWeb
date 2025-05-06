@@ -322,7 +322,7 @@ const MyAPIDetail = () => {
               </tr>
             </thead>
             <tbody>
-              {requestList.map((row, idx) => (
+              {requestList.map((row) => (
                 <tr key={row.id}>
                   <StatusTd>{row.id}</StatusTd>
                   <StatusTd><ApiType>{row.typeIcon} {row.type}</ApiType></StatusTd>
