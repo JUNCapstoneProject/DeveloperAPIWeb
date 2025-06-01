@@ -57,13 +57,49 @@ const ApiRequestFormat = ({
       {bodyStructure && (
         <div style={{ marginBottom: 12 }}>
           <div style={{ color: '#222', fontWeight: 500, marginBottom: 4 }}>Body 구조:</div>
-          <pre style={{ background: '#181c23', color: '#fff', borderRadius: 6, padding: '12px 16px', fontSize: 15, fontFamily: 'Fira Mono, monospace', overflowX: 'auto', margin: 0 }}>{bodyStructure}</pre>
+          <pre style={{ 
+            background: '#181c23', 
+            color: '#fff', 
+            borderRadius: 6, 
+            padding: '12px 16px', 
+            fontSize: 15, 
+            fontFamily: 'Fira Mono, monospace', 
+            overflowX: 'auto', 
+            overflowY: 'auto',
+            maxHeight: '300px',
+            WebkitOverflowScrolling: 'touch',
+            margin: 0 
+          }}>{bodyStructure}</pre>
         </div>
       )}
       <div style={{ color: '#222', fontWeight: 500, marginBottom: 6 }}>요청 예시</div>
-      <pre style={{ background: '#181c23', color: '#fff', borderRadius: 6, padding: '12px 16px', fontSize: 15, fontFamily: 'Fira Mono, monospace', overflowX: 'auto', marginBottom: 18 }}>{requestExample}</pre>
+      <pre style={{ 
+        background: '#181c23', 
+        color: '#fff', 
+        borderRadius: 6, 
+        padding: '12px 16px', 
+        fontSize: 15, 
+        fontFamily: 'Fira Mono, monospace', 
+        overflowX: 'auto', 
+        overflowY: 'auto',
+        maxHeight: '300px',
+        WebkitOverflowScrolling: 'touch',
+        marginBottom: 18 
+      }}>{requestExample}</pre>
       <div style={{ color: '#222', fontWeight: 500, marginBottom: 6 }}>응답 예시</div>
-      <pre style={{ background: '#181c23', color: '#fff', borderRadius: 6, padding: '12px 16px', fontSize: 15, fontFamily: 'Fira Mono, monospace', overflowX: 'auto', marginBottom: 18 }}>{responseExample}</pre>
+      <pre style={{ 
+        background: '#181c23', 
+        color: '#fff', 
+        borderRadius: 6, 
+        padding: '12px 16px', 
+        fontSize: 15, 
+        fontFamily: 'Fira Mono, monospace', 
+        overflowX: 'auto', 
+        overflowY: 'auto',
+        maxHeight: '300px',
+        WebkitOverflowScrolling: 'touch',
+        marginBottom: 18 
+      }}>{responseExample}</pre>
       {/* 필드 설명 */}
       {responseFields.length > 0 && (
         <div style={{ margin: '24px 0 0 0' }}>

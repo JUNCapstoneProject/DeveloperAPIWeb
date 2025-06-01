@@ -3,8 +3,10 @@ import HomeSection from "../components/modules/Home/HomeSection";
 import HomeCard from "../components/modules/Home/HomeCard";
 import styled from "styled-components";
 import { FiFileText, FiBarChart2 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <HomeSection />
@@ -23,6 +25,7 @@ const Home = () => {
               "글로벌 뉴스 트렌드 분석"
             ]}
             buttonText="자세히 보기 →"
+            onButtonClick={() => navigate('/about?tab=news')}
           />
           <HomeCard
             icon={<FiBarChart2 size={28} color="#0066e6" />}
@@ -35,6 +38,7 @@ const Home = () => {
               "경쟁사 비교 분석"
             ]}
             buttonText="자세히 보기 →"
+            onButtonClick={() => navigate('/about?tab=finance')}
           />
         </ApiCards>
       </ApiSection>
@@ -72,6 +76,12 @@ const ApiCards = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 900px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
 `;
 
 const SectionWrapper = styled.section`
