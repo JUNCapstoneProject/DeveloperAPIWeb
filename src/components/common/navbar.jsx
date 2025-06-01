@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginStatus, setAccessToken, logout } from "../../redux/features/authSlice";  
+import { logout } from "../../redux/features/authSlice";  
 import { selectIsLoggedIn } from "../../redux/features/authSelectors";
 import { logoutAPI } from "../../redux/features/authAPI";
 

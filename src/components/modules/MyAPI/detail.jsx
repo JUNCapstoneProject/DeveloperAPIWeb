@@ -84,8 +84,8 @@ const MyAPIDetail = () => {
     setNameError(null);
   };
 
-  const handleEditNameChange = (e) => {
-    setEditName(e.target.value);
+  const handleEditNameChange = (event) => {
+    setEditName(event.target.value);
   };
 
   const handleEditNameCancel = () => {
@@ -126,10 +126,10 @@ const MyAPIDetail = () => {
     }
   };
 
-  const handleEditNameKeyDown = (e) => {
-    if (e.key === "Enter") {
+  const handleEditNameKeyDown = (event) => {
+    if (event.key === "Enter") {
       handleEditNameSave();
-    } else if (e.key === "Escape") {
+    } else if (event.key === "Escape") {
       handleEditNameCancel();
     }
   };

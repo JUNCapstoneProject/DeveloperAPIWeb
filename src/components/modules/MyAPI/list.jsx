@@ -190,16 +190,14 @@ const MyAPIList = () => {
       const data = await res.json();
 
       if (data.success) {
-        // 삭제 성공 시 목록 새로고침
         setSelected([]);
-        // 목록 새로 불러오기
         if (developerId) fetchData();
       } else {
         let msg = "삭제에 실패했습니다.";
         if (data.error) msg += "\n" + data.error;
         alert(msg);
       }
-    } catch (e) {
+    } catch (error) {
       alert("서버와 통신 중 오류가 발생했습니다.");
     }
   };

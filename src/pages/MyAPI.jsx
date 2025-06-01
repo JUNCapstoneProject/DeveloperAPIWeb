@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setClientIds } from "../redux/features/clientIdSlice";
 import MyAPIDetail from "../components/modules/MyAPI/detail";
 import MyAPIList from "../components/modules/MyAPI/list";
@@ -103,14 +103,6 @@ const MyAPI = () => {
       setView(location.state.view);
     }
   }, [location.state]);
-
-  // API 응답 데이터를 받아서 clientId만 추출하여 Redux에 저장
-  const handleApiResponse = (response) => {
-    if (response.success && response.response) {
-      const clientIds = response.response.map(app => app.clientId);
-      dispatch(setClientIds(clientIds));
-    }
-  };
 
   return (
     <Container>

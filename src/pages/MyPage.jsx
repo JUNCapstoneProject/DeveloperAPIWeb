@@ -59,7 +59,6 @@ const Content = styled.div`
 `;
 
 const MyPage = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [activeTab, setActiveTab] = React.useState('계정 설정');
 
   /*
