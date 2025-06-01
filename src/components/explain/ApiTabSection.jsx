@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import ApiIntro from "./ApiIntro";
 import ApiKeyGuide from "./ApiKeyGuide";
 import ApiAuthGuide from "./ApiAuthGuide";
@@ -154,7 +155,18 @@ const apiData = {
 };
 
 const ApiTabSection = () => {
-  const [tab, setTab] = useState("finance");
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get("tab") === "news" ? "news" : "finance";
+  const [tab, setTab] = useState(initialTab);
+
+  useEffect(() => {
+    const paramTab = searchParams.get("tab");
+    if (paramTab && paramTab !== tab) {
+      setTab(paramTab);
+    }
+    // eslint-disable-next-line
+  }, [searchParams]);
+
   return (
     <div>
       <div style={{ display: "flex", gap: 16, marginBottom: 32 }}>
