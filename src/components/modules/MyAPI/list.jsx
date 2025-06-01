@@ -156,7 +156,7 @@ const MyAPIList = () => {
         } else {
           setError("데이터를 불러오지 못했습니다.");
         }
-      } catch (e) {
+      } catch {
         setError("서버와 통신 중 오류가 발생했습니다.");
       } finally {
         setLoading(false);
@@ -197,7 +197,7 @@ const MyAPIList = () => {
         if (data.error) msg += "\n" + data.error;
         alert(msg);
       }
-    } catch (error) {
+    } catch {
       alert("서버와 통신 중 오류가 발생했습니다.");
     }
   };
@@ -220,7 +220,7 @@ const MyAPIList = () => {
       } else {
         setError("데이터를 불러오지 못했습니다.");
       }
-    } catch (e) {
+    } catch {
       setError("서버와 통신 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);

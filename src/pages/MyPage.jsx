@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../redux/features/authSelectors';
 import { Navigate } from 'react-router-dom';
 import AccountContent from '../components/modules/mypage/AccountContent';
 import SecurityContent from '../components/modules/mypage/SecurityContent';

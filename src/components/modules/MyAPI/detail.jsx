@@ -55,7 +55,7 @@ const MyAPIDetail = () => {
         } else {
           setError("데이터를 불러오지 못했습니다.");
         }
-      } catch (e) {
+      } catch {
         setError("네트워크 오류가 발생했습니다.");
       } finally {
         setLoading(false);
@@ -121,7 +121,7 @@ const MyAPIDetail = () => {
       } else {
         setNameError(data.error || "이름 변경에 실패했습니다.");
       }
-    } catch (e) {
+    } catch {
       setNameError("서버와의 통신 중 오류가 발생했습니다.");
     }
   };

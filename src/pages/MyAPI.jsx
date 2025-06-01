@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setClientIds } from "../redux/features/clientIdSlice";
 import MyAPIDetail from "../components/modules/MyAPI/detail";
 import MyAPIList from "../components/modules/MyAPI/list";
 import styled from "styled-components";
@@ -94,7 +92,6 @@ const PrimaryButton = styled(Button)`
 const MyAPI = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
   const [view, setView] = useState(location.state?.view || "list");
 
   // location.state가 변경될 때 view 상태 업데이트

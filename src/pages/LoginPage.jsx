@@ -32,7 +32,7 @@ const LoginPage = () => {
           } else {
             dispatch(setLoginStatus(false));
           }
-        } catch (error) {
+        } catch {
           dispatch(setLoginStatus(false));
         }
       } else {
@@ -78,11 +78,9 @@ const LoginPage = () => {
             {
               accessToken: responseData.accessToken.replace('Bearer ', ''),
             },
-      
           );
-          // devIdRes.data.response.user.developerId 등에서 developerId 추출
           localStorage.setItem("developerId", devIdRes.data.response.user.developerId);
-        } catch (e) {
+        } catch {
           // 예외 처리
         }
 
