@@ -84,7 +84,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   }
 
   // destination 헤더 추가
-  if (config.baseURL?.includes('auth_server')) {
+  if (config.baseURL === AUTH_SERVER_URL) {
     config.headers.destination = 'assist';
   } else {
     config.headers.destination = 'analysis';
