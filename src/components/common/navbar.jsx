@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/features/authSlice";  
+import { logout } from "../../redux/features/authSlice";
 import { selectIsLoggedIn } from "../../redux/features/authSelectors";
 import { logoutAPI } from "../../redux/features/authAPI";
 
@@ -14,19 +14,19 @@ const Navbar = () => {
 
   const handleQuickLogin = (e) => {
     e.preventDefault();
-    navigate('/login');
+    navigate("/login");
     setIsMenuOpen(false);
   };
 
   const handleLogout = async () => {
     const success = await logoutAPI();
     if (success) {
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem("accessToken");
       dispatch(logout());
       setIsMenuOpen(false);
-      alert('로그아웃 되었습니다.');
+      alert("로그아웃 되었습니다.");
     } else {
-      alert('로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.');
+      alert("로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -37,43 +37,57 @@ const Navbar = () => {
           <LogoImg src="/logo.svg" alt="투자인 로고" />
           <Brand>TUZAIN DEVELOPERS</Brand>
         </LogoBox>
-        <Menu className={isMenuOpen ? 'open' : ''}>
-          <CloseButton onClick={() => setIsMenuOpen(false)}>×</CloseButton>
+        <Menu className={isMenuOpen ? "open" : ""}>
+          {isMenuOpen && (
+            <CloseButton onClick={() => setIsMenuOpen(false)}>×</CloseButton>
+          )}
           <MenuItem>
-            <StyledLink to="/about" onClick={() => setIsMenuOpen(false)}>API 소개</StyledLink>
+            <StyledLink to="/about" onClick={() => setIsMenuOpen(false)}>
+              API 소개
+            </StyledLink>
           </MenuItem>
           <MenuItem>
-            <StyledLink to="/usage" onClick={() => setIsMenuOpen(false)}>API 사용하기</StyledLink>
+            <StyledLink to="/usage" onClick={() => setIsMenuOpen(false)}>
+              API 사용하기
+            </StyledLink>
           </MenuItem>
           <MenuItem>
-            <StyledLink to="/apps" onClick={() => setIsMenuOpen(false)}>내 애플리케이션</StyledLink>
+            <StyledLink to="/apps" onClick={() => setIsMenuOpen(false)}>
+              내 애플리케이션
+            </StyledLink>
           </MenuItem>
           <MobileOnly>
             <MenuItem>
-              <MenuLink onClick={() => {
-                isLoggedIn ? navigate('/mypage') : navigate('/login');
-                setIsMenuOpen(false);
-              }}>
+              <MenuLink
+                onClick={() => {
+                  isLoggedIn ? navigate("/mypage") : navigate("/login");
+                  setIsMenuOpen(false);
+                }}
+              >
                 마이페이지
               </MenuLink>
             </MenuItem>
             <MenuItem>
               {isLoggedIn ? (
-                <MenuLink onClick={handleLogout}>
-                  로그아웃
-                </MenuLink>
+                <MenuLink onClick={handleLogout}>로그아웃</MenuLink>
               ) : (
-                <MenuLink onClick={handleQuickLogin}>
-                  로그인
-                </MenuLink>
+                <MenuLink onClick={handleQuickLogin}>로그인</MenuLink>
               )}
             </MenuItem>
           </MobileOnly>
         </Menu>
         <Actions>
           <DesktopOnly>
-            <MyPageBtn onClick={() => isLoggedIn ? navigate('/mypage') : navigate('/login')}>
-              <img src="/my.svg" alt="마이페이지" style={{ width: 32, height: 32, borderRadius: '50%' }} />
+            <MyPageBtn
+              onClick={() =>
+                isLoggedIn ? navigate("/mypage") : navigate("/login")
+              }
+            >
+              <img
+                src="/my.svg"
+                alt="마이페이지"
+                style={{ width: 32, height: 32, borderRadius: "50%" }}
+              />
             </MyPageBtn>
             {isLoggedIn ? (
               <LoginBtn type="button" onClick={handleLogout}>
@@ -85,8 +99,8 @@ const Navbar = () => {
               </LoginBtn>
             )}
           </DesktopOnly>
-          <HamburgerButton 
-            className={isMenuOpen ? 'open' : ''} 
+          <HamburgerButton
+            className={isMenuOpen ? "open" : ""}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="메뉴"
           >
@@ -103,6 +117,7 @@ const Navbar = () => {
 export default Navbar;
 
 // styled-components
+
 const NavbarWrapper = styled.nav`
   width: 100%;
   background: #fff;
@@ -238,12 +253,6 @@ const MyPageBtn = styled.button`
   font-size: 16px;
   font-weight: 500;
 
-  span {
-    @media (min-width: 769px) {
-      display: none;
-    }
-  }
-
   &:hover {
     color: #0066e6;
   }
@@ -338,7 +347,7 @@ const CloseButton = styled.button`
     color: #0066e6;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 846px) {
     display: none;
   }
 `;

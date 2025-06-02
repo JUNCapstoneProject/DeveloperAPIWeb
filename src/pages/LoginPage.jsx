@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 import { setLoginStatus } from "../redux/features/authSlice";
 import "./LoginPage.css";
 
@@ -54,12 +55,10 @@ const LoginPage = () => {
       const redirectUrl = urlParams.get("redirectUrl") || "/";
 
       const requestBody = { email, password };
-      const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
 
-      const response = await axios.post(
-        `${AUTH_SERVER_URL}/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
-        requestBody,
-        { withCredentials: true }
+      const response = await axiosInstance.post(
+        `/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
+        requestBody
       );
 
       const { success, response: responseData, error: apiError } = response.data;
