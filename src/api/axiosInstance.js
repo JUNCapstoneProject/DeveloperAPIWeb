@@ -3,6 +3,8 @@ import axios from "axios";
 // const baseURL = import.meta.env.VITE_API_BASE_URL;
 const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
 
+console.log("🚀 axiosInstance 초기화 시작", { AUTH_SERVER_URL });
+
 // ✅ 1. Axios 인스턴스 생성 (기본 설정 포함)
 // axiosInstance는 모든 API 요청에 공통적으로 사용할 axios 인스턴스입니다.
 // baseURL: 모든 요청의 기본 URL로 사용됩니다.
@@ -12,11 +14,72 @@ const axiosInstance = axios.create({
   withCredentials: true, // ✅ 쿠키 전송 허용 (refreshToken 쿠키 포함됨)
 });
 
+console.log("✅ axiosInstance 생성 완료");
+
 // ✅ 2. 요청 인터셉터: accessToken 자동으로 Authorization 헤더에 추가
 // 모든 요청 전에 실행되어 localStorage에 저장된 accessToken을 Authorization 헤더에 추가합니다.
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(async (config) => {
+  console.log("🔍 요청 인터셉터 실행됨");
+  
   const token = localStorage.getItem("accessToken"); // accessToken을 localStorage에서 가져옴
-  if (token) {
+  
+  // 쿠키 확인 로직 개선
+  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+  const refreshTokenCookie = cookies.find(cookie => cookie.startsWith('refreshToken='));
+  const hasRefreshToken = !!refreshTokenCookie;
+  
+  console.log("🔍 쿠키 상세 정보:", {
+    allCookies: cookies,
+    refreshTokenCookie,
+    hasRefreshToken,
+    cookieString: document.cookie
+  });
+
+  console.log("🔍 요청 인터셉터 디버깅:", {
+    hasAccessToken: !!token,
+    hasRefreshToken,
+    isRefreshing,
+    currentCookie: document.cookie,
+    url: config.url,
+    config
+  });
+
+  // accessToken이 없고 refreshToken이 있는 경우
+  if (!token && hasRefreshToken && !isRefreshing) {
+    console.log("🔄 refreshToken으로 새로운 accessToken 요청 시작");
+    isRefreshing = true;
+    try {
+      // refresh API 호출
+      const res = await axios.post(
+        AUTH_SERVER_URL + "/api/auth/refresh",
+        {},
+        { 
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'include'
+        }
+      );
+
+      console.log("✅ refresh API 응답:", res.data);
+
+      if (res.data?.success && res.data?.response) {
+        const newAccessToken = res.data.response;
+        localStorage.setItem("accessToken", newAccessToken);
+        config.headers.Authorization = newAccessToken;
+        console.log("✅ 새로운 accessToken 저장 및 헤더 설정 완료");
+      }
+    } catch (error) {
+      console.error("❌ refreshToken 갱신 실패:", error);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("developerId");
+      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } finally {
+      isRefreshing = false;
+    }
+  } else if (token) {
     config.headers.Authorization = `${token}`; // accessToken을 Authorization 헤더에 추가
   }
 
@@ -143,4 +206,13 @@ axiosInstance.interceptors.response.use(
 );
 
 // axiosInstance를 외부에서 사용할 수 있도록 export
+console.log("🔍 axiosInstance 테스트 요청 시작");
+axiosInstance.get("/api/auth/check")
+  .then(response => {
+    console.log("✅ 테스트 요청 성공:", response.data);
+  })
+  .catch(error => {
+    console.error("❌ 테스트 요청 실패:", error);
+  });
+
 export default axiosInstance;
