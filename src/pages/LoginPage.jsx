@@ -57,7 +57,7 @@ const LoginPage = () => {
       const requestBody = { email, password };
 
       const response = await axiosInstance.post(
-        `/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
+        `${import.meta.env.VITE_AUTH_SERVER_URL}/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
         requestBody
       );
 
