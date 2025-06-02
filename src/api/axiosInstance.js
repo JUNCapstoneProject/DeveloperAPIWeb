@@ -84,13 +84,10 @@ axiosInstance.interceptors.request.use(async (config) => {
   }
 
   // destination 헤더 추가
-  const isProduction = import.meta.env.MODE === 'production';
-  if (isProduction) {
-    if (config.baseURL?.includes('auth_server')) {
-      config.headers.destination = 'assist';
-    } else {
-      config.headers.destination = 'analysis';
-    }
+  if (config.baseURL?.includes('auth_server')) {
+    config.headers.destination = 'assist';
+  } else {
+    config.headers.destination = 'analysis';
   }
 
   return config;
