@@ -5,6 +5,7 @@ import axios from "axios";
 import axiosInstance from "../api/axiosInstance";
 import { setLoginStatus } from "../redux/features/authSlice";
 import "./LoginPage.css";
+import fetchWithAssist from "../fetchWithAssist";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -77,13 +78,20 @@ const LoginPage = () => {
 
         // developerId 생성 API 호출
         try {
-          const devIdRes = await axios.post(
+          const devIdRes = await fetchWithAssist(
             `${API_BASE_URL}/api/auth/register`,
             {
-              accessToken: responseData.accessToken.replace('Bearer ', ''),
-            },
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                accessToken: responseData.accessToken.replace('Bearer ', ''),
+              }),
+            }
           );
-          localStorage.setItem("developerId", devIdRes.data.response.user.developerId);
+          if (devIdRes.ok) {
+            const devIdData = await devIdRes.json();
+            localStorage.setItem("developerId", devIdData.response.user.developerId);
+          }
         } catch {
           // 예외 처리
         }
