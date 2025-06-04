@@ -20,19 +20,21 @@ console.log("✅ axiosInstance 생성 완료");
 // 모든 요청 전에 실행되어 localStorage에 저장된 accessToken을 Authorization 헤더에 추가합니다.
 axiosInstance.interceptors.request.use(async (config) => {
   console.log("🔍 요청 인터셉터 실행됨");
-  
+
   const token = localStorage.getItem("accessToken"); // accessToken을 localStorage에서 가져옴
-  
+
   // 쿠키 확인 로직 개선
-  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-  const refreshTokenCookie = cookies.find(cookie => cookie.startsWith('refreshToken='));
+  const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+  const refreshTokenCookie = cookies.find((cookie) =>
+    cookie.startsWith("refreshToken=")
+  );
   const hasRefreshToken = !!refreshTokenCookie;
-  
+
   console.log("🔍 쿠키 상세 정보:", {
     allCookies: cookies,
     refreshTokenCookie,
     hasRefreshToken,
-    cookieString: document.cookie
+    cookieString: document.cookie,
   });
 
   console.log("🔍 요청 인터셉터 디버깅:", {
@@ -41,7 +43,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     isRefreshing,
     currentCookie: document.cookie,
     url: config.url,
-    config
+    config,
   });
 
   // accessToken이 없고 refreshToken이 있는 경우
@@ -53,13 +55,13 @@ axiosInstance.interceptors.request.use(async (config) => {
       const res = await axios.post(
         AUTH_SERVER_URL + "/api/auth/refresh",
         {},
-        { 
+        {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
-          credentials: 'include'
+          credentials: "include",
         }
       );
 
@@ -75,7 +77,8 @@ axiosInstance.interceptors.request.use(async (config) => {
       console.error("❌ refreshToken 갱신 실패:", error);
       localStorage.removeItem("accessToken");
       localStorage.removeItem("developerId");
-      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie =
+        "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     } finally {
       isRefreshing = false;
     }
@@ -85,9 +88,9 @@ axiosInstance.interceptors.request.use(async (config) => {
 
   // destination 헤더 추가
   if (config.baseURL === AUTH_SERVER_URL) {
-    config.headers.destination = 'assist';
+    config.headers["x-destination"] = "assist"; // ✅ 바뀐 부분
   } else {
-    config.headers.destination = 'analysis';
+    config.headers["x-destination"] = "analysis";
   }
 
   return config;
@@ -137,13 +140,13 @@ axiosInstance.interceptors.response.use(
           const res = await axios.post(
             AUTH_SERVER_URL + "/api/auth/refresh",
             {},
-            { 
+            {
               withCredentials: true,
               headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                "Content-Type": "application/json",
+                Accept: "application/json",
               },
-              credentials: 'include'
+              credentials: "include",
             }
           );
 
@@ -152,7 +155,7 @@ axiosInstance.interceptors.response.use(
           console.log("refresh API 응답 구조:", {
             success: res.data?.success,
             accessToken: res.data?.accessToken,
-            response: res.data?.response
+            response: res.data?.response,
           });
 
           if (res.data?.success && res.data?.response) {
@@ -161,20 +164,21 @@ axiosInstance.interceptors.response.use(
             localStorage.setItem("accessToken", newAccessToken);
             onRefreshed(newAccessToken);
             isRefreshing = false;
-            
+
             // 원래 요청 재시도 (Bearer 접두사 포함)
             originalRequest.headers.Authorization = newAccessToken;
             const retryResponse = await axiosInstance(originalRequest);
-            
+
             // 재시도한 요청이 여전히 401을 반환하면 로그아웃 처리
             if (retryResponse.status === 401) {
               console.error("❌ 토큰 갱신 후에도 인증 실패: 로그아웃 처리");
               localStorage.removeItem("accessToken");
               localStorage.removeItem("developerId");
-              document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+              document.cookie =
+                "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
               return Promise.reject(new Error("인증 실패"));
             }
-            
+
             return retryResponse;
           } else {
             throw new Error(res.data?.message || "토큰 갱신 실패");
@@ -183,7 +187,8 @@ axiosInstance.interceptors.response.use(
           console.error("❌ refreshToken도 만료됨: 로그아웃 처리 필요");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("developerId");
-          document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie =
+            "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
           isRefreshing = false;
           return Promise.reject(refreshError);
         }
@@ -204,11 +209,12 @@ axiosInstance.interceptors.response.use(
 
 // axiosInstance를 외부에서 사용할 수 있도록 export
 console.log("🔍 axiosInstance 테스트 요청 시작");
-axiosInstance.get("/api/auth/check")
-  .then(response => {
+axiosInstance
+  .get("/api/auth/check")
+  .then((response) => {
     console.log("✅ 테스트 요청 성공:", response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("❌ 테스트 요청 실패:", error);
   });
 
