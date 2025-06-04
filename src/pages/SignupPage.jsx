@@ -113,7 +113,7 @@ const SignupPage = () => {
     try {
       const response = await fetchWithAssist(`${AUTH_SERVER_URL}/api/auth/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-destination": "assist" },
         body: JSON.stringify({ nickname, email, password }),
       });
       const data = await response.json();

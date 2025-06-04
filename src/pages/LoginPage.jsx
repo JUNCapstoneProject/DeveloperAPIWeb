@@ -29,6 +29,7 @@ const LoginPage = () => {
             {
               headers: {
                 Authorization: token,
+                "x-destination": "assist",
               },
             }
           );

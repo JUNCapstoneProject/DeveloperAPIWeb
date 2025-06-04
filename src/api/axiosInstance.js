@@ -60,6 +60,7 @@ axiosInstance.interceptors.request.use(async (config) => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            "x-destination": "assist"
           },
           credentials: "include",
         }
@@ -137,6 +138,7 @@ axiosInstance.interceptors.response.use(
               headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
+                "x-destination": "assist"
               },
               credentials: "include",
             }

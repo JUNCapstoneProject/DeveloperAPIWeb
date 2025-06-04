@@ -108,7 +108,7 @@ const AccountContent = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await axiosInstance.get(`/api/users/me`);
+        const res = await axiosInstance.get(`/api/users/me`, { headers: { assist: 'assist' } });
         const { success, response } = res.data;
         if (success && response?.user) {
           setUserInfo(response.user);
@@ -125,7 +125,7 @@ const AccountContent = () => {
   const handleEdit = async () => {
     if (isEditing) {
       try {
-        const res = await axiosInstance.put(`/api/users/me`, { nickname: editedNickname });
+        const res = await axiosInstance.put(`/api/users/me`, { nickname: editedNickname }, { headers: { assist: 'assist' } });
         const { success } = res.data;
         if (success) {
           setUserInfo((prev) => ({ ...prev, nickname: editedNickname }));
@@ -143,13 +143,12 @@ const AccountContent = () => {
     setDeleteError('');
     if (!window.confirm('정말로 회원 탈퇴하시겠습니까?\n모든 데이터가 삭제되며 복구할 수 없습니다.')) return;
     try {
-      const res = await axiosInstance.delete(`/api/users/me`);
+      const res = await axiosInstance.delete(`/api/users/me`, { headers: { assist: 'assist' } });
       if (res.data.success) {
         // developerId 삭제 API 호출
         try {
           const developerId = localStorage.getItem('developerId');
-          await axiosInstance.delete(`${API_BASE_URL}/api/auth/${developerId}`);
-          // 로그아웃 처리: 토큰 삭제 및 메인 페이지로 이동
+          await axiosInstance.delete(`${API_BASE_URL}/api/auth/${developerId}`, { headers: { analysis: 'analysis' } });
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('developerId');
