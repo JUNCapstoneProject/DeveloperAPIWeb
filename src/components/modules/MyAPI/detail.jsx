@@ -47,9 +47,9 @@ const MyAPIDetail = () => {
             status: data.response.status,
             issuedAt: data.response.createdAt,
             enabledApi:
-              data.response.apiCategoryId === "1"
+              data.response.apiCategoryId === "0001"
                 ? ["news"]
-                : data.response.apiCategoryId === "2"
+                : data.response.apiCategoryId === "0002"
                 ? ["finance"]
                 : ["news", "finance"],
           });
@@ -107,6 +107,7 @@ const MyAPIDetail = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            "x-destination": "analysis",
           },
           body: JSON.stringify({ newName: editName.trim() }),
         }
