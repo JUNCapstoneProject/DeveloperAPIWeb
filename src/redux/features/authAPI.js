@@ -38,7 +38,8 @@ export const checkLoginStatusAPI = async () => {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'x-destination': 'assist'
           },
           credentials: 'include'
         }
@@ -48,7 +49,11 @@ export const checkLoginStatusAPI = async () => {
         const newAccessToken = refreshResponse.data.response;
         localStorage.setItem("accessToken", newAccessToken);
         // check API를 다시 호출
-        const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check");
+        const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check", {
+          headers: {
+            'x-destination': 'assist'
+          }
+        });
         return checkResponse.data?.success && checkResponse.data?.response?.isLogin;
       }
     } catch (refreshError) {
@@ -63,7 +68,11 @@ export const checkLoginStatusAPI = async () => {
   if (!token) return false;
 
   try {
-    const response = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check");
+    const response = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check", {
+      headers: {
+        'x-destination': 'assist'
+      }
+    });
     
     // 새로운 응답 구조 처리
     if (response.data?.success && response.data?.response?.isLogin !== undefined) {
@@ -77,7 +86,8 @@ export const checkLoginStatusAPI = async () => {
               withCredentials: true,
               headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'x-destination': 'assist'
               },
               credentials: 'include'
             }
@@ -88,7 +98,11 @@ export const checkLoginStatusAPI = async () => {
             const newAccessToken = refreshResponse.data.response;
             localStorage.setItem("accessToken", newAccessToken);
             // check API를 다시 호출
-            const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check");
+            const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check", {
+              headers: {
+                'x-destination': 'assist'
+              }
+            });
             
             // check 요청이 실패하면 로그아웃 처리
             if (!checkResponse.data?.success || !checkResponse.data?.response?.isLogin) {
@@ -128,7 +142,8 @@ export const checkLoginStatusAPI = async () => {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
+              'Accept': 'application/json',
+              'x-destination': 'assist'
             },
             credentials: 'include'
           }
@@ -147,7 +162,11 @@ export const checkLoginStatusAPI = async () => {
           const newAccessToken = refreshResponse.data.response;
           localStorage.setItem("accessToken", newAccessToken);
           // check API를 다시 호출
-          const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check");
+          const checkResponse = await axiosInstance.get(AUTH_SERVER_URL + "/api/auth/check", {
+            headers: {
+              'x-destination': 'assist'
+            }
+          });
           
           // check 요청이 실패하면 로그아웃 처리
           if (!checkResponse.data?.success || !checkResponse.data?.response?.isLogin) {

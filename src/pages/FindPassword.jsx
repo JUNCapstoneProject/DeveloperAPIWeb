@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchWithAssist from '../fetchWithAssist';
 
+const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
+
 const FindPassword = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -13,10 +15,11 @@ const FindPassword = () => {
     setErrorMessage(""); // 이전 에러 초기화
 
     try {
-      const response = await fetchWithAssist("http://localhost:4003/api/auth/password-reset-request", {
+      const response = await fetchWithAssist(`${AUTH_SERVER_URL}/api/auth/password-reset-request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-destination": "assist",
         },
         body: JSON.stringify({ email }),
       });

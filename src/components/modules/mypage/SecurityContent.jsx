@@ -89,7 +89,7 @@ const SecurityContent = () => {
       const response = await axiosInstance.put('/api/users/me/password', {
         oldPassword,
         newPassword,
-      });
+      }, { headers: { assist: 'assist' } });
 
       if (response.data.success) {
         setSuccess('비밀번호가 성공적으로 변경되었습니다.');
