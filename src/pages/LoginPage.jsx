@@ -5,6 +5,7 @@ import axios from "axios";
 import axiosInstance from "../api/axiosInstance";
 import { setLoginStatus } from "../redux/features/authSlice";
 import "./LoginPage.css";
+import fetchWithAssist from "../fetchWithAssist";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
