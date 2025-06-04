@@ -85,14 +85,6 @@ axiosInstance.interceptors.request.use(async (config) => {
   } else if (token) {
     config.headers.Authorization = `${token}`; // accessToken을 Authorization 헤더에 추가
   }
-
-  // destination 헤더 추가
-  if (config.baseURL === AUTH_SERVER_URL) {
-    config.headers["x-destination"] = "assist"; // ✅ 바뀐 부분
-  } else {
-    config.headers["x-destination"] = "analysis";
-  }
-
   return config;
 });
 
