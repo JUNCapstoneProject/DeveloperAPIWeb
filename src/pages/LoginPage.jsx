@@ -24,11 +24,14 @@ const LoginPage = () => {
       const token = localStorage.getItem("accessToken");
       if (token) {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_AUTH_SERVER_URL}/api/auth/check`, {
-            headers: {
-              Authorization: token
+          const response = await axios.get(
+            `${import.meta.env.VITE_AUTH_SERVER_URL}/api/auth/check`,
+            {
+              headers: {
+                Authorization: token,
+              },
             }
-          });
+          );
           if (response.data?.success && response.data?.response?.isLogin) {
             dispatch(setLoginStatus(true));
           } else {
@@ -58,16 +61,22 @@ const LoginPage = () => {
       const requestBody = { email, password };
 
       const response = await axiosInstance.post(
-        `${import.meta.env.VITE_AUTH_SERVER_URL}/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
+        `${
+          import.meta.env.VITE_AUTH_SERVER_URL
+        }/api/auth/login?redirectUrl=${encodeURIComponent(redirectUrl)}`,
         requestBody,
         {
           headers: {
-            destination: 'assist'
-          }
+            destination: "assist",
+          },
         }
       );
 
-      const { success, response: responseData, error: apiError } = response.data;
+      const {
+        success,
+        response: responseData,
+        error: apiError,
+      } = response.data;
 
       if (success && responseData) {
         localStorage.setItem("accessToken", responseData.accessToken);
@@ -82,28 +91,40 @@ const LoginPage = () => {
             `${API_BASE_URL}/api/auth/register`,
             {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                destination: "analysis", // 👈 명시적으로 추가
+              },
               body: JSON.stringify({
-                accessToken: responseData.accessToken.replace('Bearer ', ''),
+                accessToken: responseData.accessToken.replace("Bearer ", ""),
               }),
             }
           );
+
           if (devIdRes.ok) {
             const devIdData = await devIdRes.json();
-            localStorage.setItem("developerId", devIdData.response.user.developerId);
+            localStorage.setItem(
+              "developerId",
+              devIdData.response.user.developerId
+            );
           }
         } catch {
           // 예외 처리
         }
 
         const redirectTo = responseData.redirectUrl || "/";
-        if (redirectTo.startsWith("http://") || redirectTo.startsWith("https://")) {
+        if (
+          redirectTo.startsWith("http://") ||
+          redirectTo.startsWith("https://")
+        ) {
           window.location.href = redirectTo;
         } else {
           navigate(redirectTo);
         }
       } else {
-        setError(apiError?.message || "아이디 또는 비밀번호가 일치하지 않습니다.");
+        setError(
+          apiError?.message || "아이디 또는 비밀번호가 일치하지 않습니다."
+        );
       }
     } catch (err) {
       const apiMessage = err.response?.data?.error?.message;
@@ -152,8 +173,8 @@ const LoginPage = () => {
 
         <p className="signup-link">
           계정이 없으신가요?{" "}
-          <button 
-            onClick={() => navigate("/signup", { state: { from } })} 
+          <button
+            onClick={() => navigate("/signup", { state: { from } })}
             className="signup-link-button"
           >
             회원가입
