@@ -34,6 +34,7 @@ const MyAPIDetail = () => {
           {
             headers: {
               Authorization: `${accessToken}`,
+              "x-destination": "analysis",
             },
           }
         );
