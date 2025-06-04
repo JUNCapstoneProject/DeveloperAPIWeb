@@ -44,7 +44,6 @@ const FindPassword = () => {
         {submitted ? (
           <div style={{ textAlign: "center", color: "#007bff", margin: "2rem 0" }}>
             입력하신 이메일로 비밀번호 재설정 안내가 전송됩니다.<br />
-            (임시 페이지입니다)
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
