@@ -189,7 +189,13 @@ export const logoutAPI = async () => {
   try {
     // AUTH_SERVER_URL을 사용하여 로그아웃 요청
     const response = await axiosInstance.post(
-      AUTH_SERVER_URL + "/api/auth/logout"
+      AUTH_SERVER_URL + "/api/auth/logout",
+      {},
+      {
+        headers: {
+          destination: "assist"
+        }
+      }
     );
 
     if (response.data.success) {
