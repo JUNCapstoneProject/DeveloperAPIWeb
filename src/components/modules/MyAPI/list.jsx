@@ -146,7 +146,8 @@ const MyAPIList = () => {
         const accessToken = localStorage.getItem("accessToken");
         const res = await fetchWithAssist(`${API_BASE_URL}/api/client/developer/${developerId}`, {
           headers: {
-            "Authorization": `${accessToken}`
+            "Authorization": `${accessToken}`,
+            "x-destination": "analysis",
           }
         });
         if (!res.ok) throw new Error("API 요청 실패");
