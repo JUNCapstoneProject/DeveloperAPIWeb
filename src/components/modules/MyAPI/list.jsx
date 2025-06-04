@@ -184,7 +184,10 @@ const MyAPIList = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `${accessToken}`
+          "Authorization": `${accessToken}`,
+          "x-destination": "analysis",
+
+
         },
         body: JSON.stringify(selected),
       });
