@@ -67,7 +67,7 @@ const LoginPage = () => {
         requestBody,
         {
           headers: {
-            destination: "assist",
+            "x-destination": "assist", // 수정
           },
         }
       );
@@ -93,7 +93,7 @@ const LoginPage = () => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                destination: "analysis", // 👈 명시적으로 추가
+                "x-destination": "analysis", // 수정
               },
               body: JSON.stringify({
                 accessToken: responseData.accessToken.replace("Bearer ", ""),
