@@ -80,6 +80,7 @@ const ApplyCard = () => {
       const res = await axiosInstance.post(`${API_BASE_URL}/api/client`, payload, {
         headers: {
           "Content-Type": "application/json",
+          "x-destination": "analysis",
         },
       });
   
