@@ -89,6 +89,8 @@ const EmailVerification = () => {
             if (data.success === true || data.success === "true") {
               setMessage("✅ 이메일 인증이 완료되었습니다. 로그인 해주세요.");
               setMsgType("success");
+              alert("✅ 이메일 인증이 완료되었습니다. 로그인 해주세요.");
+              navigate("/login");
             } else {
               setMessage("❌ 이메일 인증에 실패했습니다. 다시 시도해주세요.");
               setMsgType("error");
@@ -111,7 +113,7 @@ const EmailVerification = () => {
     }, 1500); // 1.5초 뒤에 실행 (UX 개선)
 
     return () => clearTimeout(timer);
-  }, [location.search]);
+  }, [location.search, navigate]);
 
   useEffect(() => {
     fetchStockData();

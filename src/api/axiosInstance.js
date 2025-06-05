@@ -201,15 +201,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-// axiosInstance를 외부에서 사용할 수 있도록 export
-console.log("🔍 axiosInstance 테스트 요청 시작");
-axiosInstance
-  .get("/api/auth/check")
-  .then((response) => {
-    console.log("✅ 테스트 요청 성공:", response.data);
-  })
-  .catch((error) => {
-    console.error("❌ 테스트 요청 실패:", error);
-  });
-
 export default axiosInstance;
