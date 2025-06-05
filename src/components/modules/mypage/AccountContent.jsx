@@ -108,7 +108,7 @@ const AccountContent = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await axiosInstance.get(`/api/users/me`, { headers: { assist: 'assist' } });
+        const res = await axiosInstance.get(`/api/users/me`, { headers: { "x-destination": 'assist' } });
         const { success, response } = res.data;
         if (success && response?.user) {
           setUserInfo(response.user);
