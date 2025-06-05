@@ -116,8 +116,8 @@ const DeleteButton = styled.button`
 `;
 
 const appCategoryMap = {
-  1: "뉴스분석 API",
-  2: "채권재무분석 API",
+  1: "뉴스 분석 API",
+  2: "재무제표 분석 API",
   3: "모두"
 };
 
