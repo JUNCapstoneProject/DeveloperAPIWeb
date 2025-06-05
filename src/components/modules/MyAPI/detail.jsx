@@ -47,9 +47,9 @@ const MyAPIDetail = () => {
             status: data.response.status,
             issuedAt: data.response.createdAt,
             enabledApi:
-              data.response.apiCategoryId === "0001"
+              data.response.appCategoryId === "0001"
                 ? ["news"]
-                : data.response.apiCategoryId === "0002"
+                : data.response.appCategoryId === "0002"
                 ? ["finance"]
                 : ["news", "finance"],
           });

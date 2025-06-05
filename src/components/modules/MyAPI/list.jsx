@@ -118,7 +118,7 @@ const DeleteButton = styled.button`
 const appCategoryMap = {
   1: "뉴스 분석 API",
   2: "재무제표 분석 API",
-  3: "모두"
+  3: "뉴스 분석 API, 재무제표 분석 API"
 };
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
