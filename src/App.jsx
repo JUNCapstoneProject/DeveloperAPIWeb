@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/common/navbar';
 import Home from './pages/Home';
 import Apply from './pages/Apply';
@@ -11,7 +11,6 @@ import EmailVerification from './pages/Emailverification';
 import ResetPassword from './pages/ResetPassword';
 import FindPassword from './pages/FindPassword';
 import MyPage from './pages/MyPage';
-
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setLoginStatus } from "./redux/features/authSlice";
@@ -19,20 +18,27 @@ import { checkLoginStatusAPI } from "./redux/features/authAPI";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
-    const cameFromExternal =
-      document.referrer === "" || !document.referrer.includes(location.origin);
-
     const checkLogin = async () => {
+      const cameFromExternal =
+        document.referrer === "" || !document.referrer.includes(window.location.origin);
+
+      console.log("🔍 외부 유입 여부:", cameFromExternal);
+      console.log("🔍 document.referrer:", document.referrer);
+      console.log("🔍 current origin:", window.location.origin);
+
       const isLogin = await checkLoginStatusAPI({
         allowRefresh: cameFromExternal
       });
+
+      console.log("🔍 로그인 상태 확인 결과:", isLogin);
       dispatch(setLoginStatus(isLogin));
     };
 
     checkLogin();
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   return (
     <div>
