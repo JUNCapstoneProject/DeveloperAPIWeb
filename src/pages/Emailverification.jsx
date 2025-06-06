@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import fetchWithAssist from '../fetchWithAssist';
 
-const AUTH_SERVER_URL = import.meta.env.VITE_API_AUTH_SERVER_URL;
+const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
 
 const PageWrapper = styled.div`
   min-height: 100vh;
