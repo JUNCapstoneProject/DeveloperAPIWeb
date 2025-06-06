@@ -5,7 +5,6 @@ import "./SignupPage.css";
 import fetchWithAssist from '../fetchWithAssist';
 
 const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const SignupPage = () => {
