@@ -82,9 +82,7 @@ export const checkLoginStatusAPI = async ({ allowRefresh = false } = {}) => {
                 localStorage.setItem("developerId", devIdData.response.user.developerId);
               }
             }
-          } catch (e) {
-            // 예외 무시
-          }
+          } catch {}
           return true;
         }
       }
