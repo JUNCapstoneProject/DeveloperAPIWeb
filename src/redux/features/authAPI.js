@@ -1,6 +1,7 @@
 // 🔗 axios 인스턴스 (accessToken 자동 포폴, 응답 인터셰터 포함)
 import axiosInstance from "../../api/axiosInstance"; 
 import axios from "axios";
+import fetchWithAssist from "../../fetchWithAssist";
 
 const AUTH_SERVER_URL = import.meta.env.VITE_AUTH_SERVER_URL;
 
@@ -57,7 +58,35 @@ export const checkLoginStatusAPI = async ({ allowRefresh = false } = {}) => {
         });
 
         console.log("✅ check 결과:", checkResponse.data);
-        return checkResponse.data?.success && checkResponse.data?.response?.isLogin;
+
+        // ✅ check 성공 시 developerId 발급 시도
+        if (checkResponse.data?.success && checkResponse.data?.response?.isLogin) {
+          try {
+            const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+            const devIdRes = await fetchWithAssist(
+              `${API_BASE_URL}/api/auth/register`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  destination: "analysis",
+                },
+                body: JSON.stringify({
+                  accessToken: newAccessToken.replace("Bearer ", ""),
+                }),
+              }
+            );
+            if (devIdRes.ok) {
+              const devIdData = await devIdRes.json();
+              if (devIdData.response?.user?.developerId) {
+                localStorage.setItem("developerId", devIdData.response.user.developerId);
+              }
+            }
+          } catch {
+              // silent catch intentionally
+          }
+          return true;
+        }
       }
     } catch (err) {
       console.error("🚨 [외부유입 refresh] 실패:", err);
