@@ -25,15 +25,10 @@ axiosInstance.interceptors.request.use((config) => {
 
 export const checkLoginStatusAPI = async ({ allowRefresh = false } = {}) => {
   const token = localStorage.getItem("accessToken");
-  const hasRefreshToken = document.cookie.includes("refreshToken");
 
-  console.log("🔍 [checkLoginStatusAPI] 호출됨");
-  console.log("🔍 accessToken 존재 여부:", !!token);
-  console.log("🔍 refreshToken 존재 여부:", hasRefreshToken);
-  console.log("🔍 allowRefresh:", allowRefresh);
 
   // ✅ 외부 유입 + accessToken 없음 + refreshToken 있음 → 바로 refresh 시도
-  if (!token && allowRefresh && hasRefreshToken) {
+  if (allowRefresh) {
     console.log("🔄 외부 유입 & accessToken 없음 → refresh 시도");
     try {
       const refreshResponse = await axios.post(
