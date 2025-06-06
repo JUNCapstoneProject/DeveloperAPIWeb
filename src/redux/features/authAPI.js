@@ -25,7 +25,6 @@ axiosInstance.interceptors.request.use((config) => {
 
 export const checkLoginStatusAPI = async ({ allowRefresh = false } = {}) => {
   const token = localStorage.getItem("accessToken");
-  const hasRefreshToken = document.cookie.includes("refreshToken");
 
 
   // ✅ 외부 유입 + accessToken 없음 + refreshToken 있음 → 바로 refresh 시도
