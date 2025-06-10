@@ -17,7 +17,7 @@ const apiData = {
       "글로벌 뉴스 트렌드 분석"
     ],
     authExample: "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...",
-    requestUrl: "/api/news/analyze",
+    requestUrl: "https://developer.tuzain.com/api/news/analyze",
     method: "POST",
     params: [
       { name: "text", type: "string", desc: "분석할 뉴스 본문 또는 텍스트" },
@@ -29,12 +29,57 @@ const apiData = {
       { name: "Referer", important: false },
       { name: "Authorization", important: true }
     ],
-    bodyStructure: `{
-  "text": "분석할 뉴스 본문 또는 텍스트",
-  "symbol": "005930"
+    bodyStructure: bodyStructure: `{
+  "client_id": "YOUR_CLIENT_ID",
+  "client_secret": "YOUR_SECRET",
+  "items": [
+    {
+      "event_type": "finance",
+      "data": {
+        "news_data": "",
+        "stock_history": {
+            'stock': [],
+            'Date': [],  # yyyy-mm-dd 형식
+            'Open': [],
+            'Close': [],
+            'Adj Close': [],
+            'High': [],
+            'Low': [],
+            'Volume': [],
+            'Market Cap': [],
+        },
+        "market_history": {
+            'm_Symbol': [],
+            'Date': [],
+            'Open': [],
+            'Close': [],
+            'Adj Close': [],
+            'High': [],
+            'Low': [],
+            'Volume': [],
+            'Market Cap': [],
+        },
+        "income_statement": {
+            "Total Revenue": [],
+            'Normalized Income': [],
+        },
+        "info": {
+            'priceToBook': [],
+        }
+      }
+    }
+  ]
 }`,
     requestExample: `POST /api/news/analyze\nContent-Type: application/json\nAuthorization: Bearer ...\n\n{\n  "text": "삼성전자, AI 반도체 신제품 출시...",\n  "symbol": "005930"\n}`,
-    responseExample: `HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  "sentiment": "positive",\n  "impact_score": 0.82,\n  "summary": "삼성전자가 AI 반도체 신제품을 출시했다는 긍정적 뉴스입니다.",\n  "symbol": "005930"\n}`,
+    responseExample: `{
+    "response_id": "",
+    "status_code": 200,
+    "message": "Success",
+    "item": {
+        "event_type": "news",
+        "result": 1
+    }
+}`,
     responseFields: [
       { name: "status_code", desc: "응답 상태 코드 (200: 성공, 400: 잘못된 요청, 401: 인증 실패 등)" },
       { name: "message", desc: "응답 메시지 (성공 또는 오류 설명)" },
@@ -67,7 +112,7 @@ const apiData = {
       "경쟁사 비교 분석"
     ],
     authExample: "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...",
-    requestUrl: "/api/finance/analyze",
+    requestUrl: "https://developer.tuzain.com/api/finance/analyze",
     method: "POST",
     params: [
       { name: "corp_code", type: "string", desc: "분석할 기업의 고유 코드" },
@@ -130,7 +175,15 @@ const apiData = {
   ]
 }`,
     requestExample: `POST /api/finance/analyze\nContent-Type: application/json\nAuthorization: Bearer ...\n\n{\n  "corp_code": "005930",\n  "year": 2023\n}`,
-    responseExample: `HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  "corp_code": "005930",\n  "year": 2023,\n  "score": 92,\n  "grade": "A+",\n  "summary": "삼성전자의 2023년 재무 건전성은 매우 우수합니다."\n}`,
+    responseExample: `{
+    "response_id": "",
+    "status_code": 200,
+    "message": "Success",
+    "item": {
+        "event_type": "finance",
+        "result": 0
+    }
+}`,
     responseFields: [
       { name: "status_code", desc: "응답 상태 코드 (200: 성공, 400: 잘못된 요청, 401: 인증 실패 등)" },
       { name: "message", desc: "응답 메시지 (성공 또는 오류 설명)" },
