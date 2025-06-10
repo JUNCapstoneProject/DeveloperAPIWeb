@@ -29,7 +29,7 @@ const apiData = {
       { name: "Referer", important: false },
       { name: "Authorization", important: true }
     ],
-    bodyStructure: bodyStructure: `{
+    bodyStructure: `{
   "client_id": "YOUR_CLIENT_ID",
   "client_secret": "YOUR_SECRET",
   "items": [
